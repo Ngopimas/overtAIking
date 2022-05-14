@@ -7,7 +7,7 @@ class Car {
 
     this.speed = 0;
     this.acceleration = 0.2;
-    this.maxSpeed = 10;
+    this.maxSpeed = 15;
     this.friction = 0.05;
     this.angle = 0;
     this.isCrashed = false;
@@ -17,9 +17,11 @@ class Car {
   }
 
   update(roadBorders) {
-    this.#move();
-    this.polygon = this.#createPolygon();
-    this.isCrashed = this.#assessCrash(roadBorders);
+    if (!this.isCrashed) {
+      this.#move();
+      this.polygon = this.#createPolygon();
+      this.isCrashed = this.#assessCrash(roadBorders);
+    }
 
     this.sensor.update(roadBorders);
   }
