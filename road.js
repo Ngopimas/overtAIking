@@ -53,7 +53,7 @@ class Road {
       ctx.moveTo(borders[0].x, borders[0].y);
       ctx.lineTo(borders[1].x, borders[1].y);
       ctx.stroke();
-      ctx.setLineDash([10, 15]);
+      ctx.setLineDash([20, 22]);
       ctx.strokeStyle = "red";
       ctx.beginPath();
       ctx.moveTo(borders[0].x, borders[0].y);

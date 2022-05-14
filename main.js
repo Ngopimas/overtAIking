@@ -48,4 +48,5 @@ const team = document.getElementById("team");
 team.addEventListener("change", (e) => {
   car.color = e.target.value;
   car.updateColor();
+  e.target.blur();
 });
