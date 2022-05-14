@@ -8,6 +8,22 @@
     <title>🏎️ F1 Overt[AI]king 👑</title>
   </head>
   <body>
+    <span id="team-select">
+      <label for="team">Choose a racing team: </label>
+      <select name="team" id="team">
+        <option value="white">~ Choose a team ~</option>
+        <option value="red" selected>Ferrari</option>
+        <option value="blue">Williams</option>
+        <option value="darkorange">McLaren</option>
+        <option value="darkgreen">Lotus</option>
+        <option value="darkblue">Red Bull</option>
+        <option value="grey">Mercedes</option>
+        <option value="darkslategray">Cooper</option>
+        <option value="green">Brabham</option>
+        <option value="gold">Renault</option>
+      </select>
+    </span>
+
     <canvas id="canvas"></canvas>
     <script src="utils.js"></script>
     <script src="sensor.js"></script>

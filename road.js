@@ -39,17 +39,16 @@ class Road {
 
   draw(ctx) {
     ctx.lineWidth = 5;
-    ctx.strokeStyle = "#ffffff";
 
     for (let i = 1; i < this.laneCount; i++) {
       const x = lerp(this.left, this.right, i / this.laneCount);
-      ctx.strokeStyle = "darkgrey";
+      ctx.strokeStyle = "lightslategray";
       ctx.setLineDash([0.1, 0.2]);
       this.#drawRoad(x);
     }
     ctx.setLineDash([]);
     this.borders.forEach((borders) => {
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = "floralwhite";
       ctx.beginPath();
       ctx.moveTo(borders[0].x, borders[0].y);
       ctx.lineTo(borders[1].x, borders[1].y);

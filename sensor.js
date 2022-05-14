@@ -83,6 +83,7 @@ class Sensor {
         }
         ctx.beginPath();
         ctx.lineWidth = 2;
+        ctx.setLineDash([1, 1]);
         ctx.strokeStyle = "yellow";
         ctx.moveTo(this.rays[i][0].x, this.rays[i][0].y);
         ctx.lineTo(end.x, end.y);
@@ -90,6 +91,7 @@ class Sensor {
 
         ctx.beginPath();
         ctx.lineWidth = 2;
+        ctx.setLineDash([]);
         ctx.strokeStyle = "black";
         if (this.rays[i]) {
           ctx.moveTo(this.rays[i][1].x, this.rays[i][1].y);

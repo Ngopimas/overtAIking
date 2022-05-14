@@ -1,10 +1,19 @@
 body {
   margin: 0;
-  background-color: darkgray;
+  background-color: forestgreen;
   overflow: hidden;
   text-align: center;
 }
 
 #canvas {
-  background-color: lightgray;
+  background-color: slategray;
+}
+
+#team-select {
+  position: fixed;
+  left: 4px;
+  top: 4px;
+  color: floralwhite;
+  font-weight: bolder;
+  font-size: large;
 }

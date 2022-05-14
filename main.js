@@ -8,7 +8,16 @@ const car = new Car({
   y: 100,
   controllable: true,
   maxSpeed: 5,
-  color: "gray",
+  // color: "red", // Ferrari
+  // color: "blue", // Williams
+  // color: "darkorange", // McLaren
+  // color: "darkgreen", // Lotus
+  // color: "darkblue", // Red Bull
+  // color: "grey", // Mercedes
+  // color: "darkslategray", // Cooper
+  // color: "green", // Brabham
+  // color: "gold", // Renault
+  color: "red",
 });
 const traffic = [
   new Car({ x: road.getLaneCenter(1), y: -100, color: "orange" }),
@@ -33,3 +42,10 @@ function animate() {
   ctx.restore();
   requestAnimationFrame(animate);
 }
+
+const team = document.getElementById("team");
+
+team.addEventListener("change", (e) => {
+  car.color = e.target.value;
+  car.updateColor();
+});

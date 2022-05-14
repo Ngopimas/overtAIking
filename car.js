@@ -12,7 +12,7 @@ class Car {
     this.y = y;
     this.width = width;
     this.height = height;
-    // this.color = color;
+    this.color = color;
 
     this.speed = 0;
     this.acceleration = 0.2;
@@ -32,14 +32,19 @@ class Car {
     this.mask.width = this.width;
     this.mask.height = this.height;
 
-    const maskCtx = this.mask.getContext("2d");
+    this.maskCtx = this.mask.getContext("2d");
     this.img.onload = () => {
-      maskCtx.fillStyle = color;
-      maskCtx.rect(0, 0, this.width, this.height);
-      maskCtx.fill();
-      maskCtx.globalCompositeOperation = "destination-atop";
-      maskCtx.drawImage(this.img, 0, 0, this.width, this.height);
+      this.updateColor();
     };
+  }
+
+  updateColor(color) {
+    this.maskCtx.clearRect(0, 0, this.width, this.height);
+    this.maskCtx.fillStyle = this.color;
+    this.maskCtx.rect(0, 0, this.width, this.height);
+    this.maskCtx.fill();
+    this.maskCtx.globalCompositeOperation = "destination-atop";
+    this.maskCtx.drawImage(this.img, 0, 0, this.width, this.height);
   }
 
   update(roadBorders, traffic) {
