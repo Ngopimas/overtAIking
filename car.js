@@ -1,34 +1,67 @@
 class Car {
-  constructor(x, y, width, height) {
+  constructor({
+    x,
+    y,
+    width = 30,
+    height = 50,
+    controllable = false,
+    maxSpeed = 2,
+    color = "white",
+  }) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
+    // this.color = color;
 
     this.speed = 0;
     this.acceleration = 0.2;
-    this.maxSpeed = 15;
+    this.maxSpeed = maxSpeed;
     this.friction = 0.05;
     this.angle = 0;
     this.isCrashed = false;
+    this.controls = new Controls(controllable);
+    if (controllable) {
+      this.sensor = new Sensor(this);
+    }
 
-    this.sensor = new Sensor(this);
-    this.controls = new Controls();
+    this.img = new Image();
+    this.img.src = "./car.png";
+
+    this.mask = document.createElement("canvas");
+    this.mask.width = this.width;
+    this.mask.height = this.height;
+
+    const maskCtx = this.mask.getContext("2d");
+    this.img.onload = () => {
+      maskCtx.fillStyle = color;
+      maskCtx.rect(0, 0, this.width, this.height);
+      maskCtx.fill();
+      maskCtx.globalCompositeOperation = "destination-atop";
+      maskCtx.drawImage(this.img, 0, 0, this.width, this.height);
+    };
   }
 
-  update(roadBorders) {
+  update(roadBorders, traffic) {
     if (!this.isCrashed) {
       this.#move();
       this.polygon = this.#createPolygon();
-      this.isCrashed = this.#assessCrash(roadBorders);
+      this.isCrashed = this.#assessCrash(roadBorders, traffic);
     }
 
-    this.sensor.update(roadBorders);
+    if (this.sensor) {
+      this.sensor.update(roadBorders, traffic);
+    }
   }
 
-  #assessCrash(roadBorders) {
+  #assessCrash(roadBorders, traffic) {
     for (let i = 0; i < roadBorders.length; i++) {
       if (doesPolysIntersect(this.polygon, roadBorders[i])) {
+        return true;
+      }
+    }
+    for (let i = 0; i < traffic.length; i++) {
+      if (doesPolysIntersect(this.polygon, traffic[i].polygon)) {
         return true;
       }
     }
@@ -97,27 +130,47 @@ class Car {
   }
 
   draw(ctx) {
-    // ctx.save();
-    // ctx.translate(this.x, this.y);
-    // ctx.rotate(-this.angle);
+    if (this.sensor) {
+      this.sensor.draw(ctx);
+    }
+
+    // if (this.polygon) {
+    //   if (this.isCrashed) {
+    //     ctx.fillStyle = "red";
+    //   } else {
+    //     ctx.fillStyle = this.color;
+    //   }
+    //   ctx.beginPath();
+    //   ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
+    //   for (let i = 1; i < this.polygon.length; i++) {
+    //     ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
+    //   }
+    //   ctx.fill();
+    // }
+
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(-this.angle);
     // ctx.beginPath();
     // ctx.rect(-this.width * 0.5, -this.height * 0.5, this.width, this.height);
     // ctx.fill();
-    // ctx.restore();
-    if (this.polygon) {
-      if (this.isCrashed) {
-        ctx.fillStyle = "red";
-      } else {
-        ctx.fillStyle = "black";
-      }
-      ctx.beginPath();
-      ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
-      for (let i = 1; i < this.polygon.length; i++) {
-        ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
-      }
-      ctx.fill();
+    if (!this.isCrashed) {
+      ctx.drawImage(
+        this.mask,
+        -this.width * 0.5,
+        -this.height * 0.5,
+        this.width,
+        this.height
+      );
+      ctx.globalCompositeOperation = "multiply";
     }
-
-    this.sensor.draw(ctx);
+    ctx.drawImage(
+      this.img,
+      -this.width * 0.5,
+      -this.height * 0.5,
+      this.width,
+      this.height
+    );
+    ctx.restore();
   }
 }

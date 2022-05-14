@@ -1,16 +1,14 @@
 class Controls {
-  constructor() {
-    // this.keys = {};
-    // this.keydown = this.keydown.bind(this);
-    // this.keyup = this.keyup.bind(this);
-    // window.addEventListener("keydown", this.keydown);
-    // window.addEventListener("keyup", this.keyup);
+  constructor(isControllable) {
     this.forward = false;
     this.left = false;
     this.right = false;
     this.backward = false;
-
-    this.#addKeyboardListeners();
+    if (isControllable) {
+      this.#addKeyboardListeners();
+    } else {
+      this.forward = true;
+    }
   }
   keydown(event) {
     this.keys[event.key] = true;

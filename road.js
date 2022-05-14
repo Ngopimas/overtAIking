@@ -4,12 +4,6 @@ class Road {
     this.width = width;
     this.laneCount = laneCount;
 
-    // this.lanes = [];
-    // this.laneWidth = width / laneCount;
-    // for (let i = 0; i < laneCount; i++) {
-    //     this.lanes.push(new Lane(this.x + this.laneWidth * i, this.laneWidth));
-    // }
-
     this.left = x - width * 0.5;
     this.right = x + width * 0.5;
 
@@ -49,29 +43,24 @@ class Road {
 
     for (let i = 1; i < this.laneCount; i++) {
       const x = lerp(this.left, this.right, i / this.laneCount);
-
-      //   if (i > 0 && i < this.laneCount) {
-      //   ctx.strokeStyle = "darkgray";
-      ctx.strokeStyle = "white";
-      //   ctx.setLineDash([0.1, 0.2]);
-      ctx.setLineDash([20, 20]);
+      ctx.strokeStyle = "darkgrey";
+      ctx.setLineDash([0.1, 0.2]);
       this.#drawRoad(x);
-      //   } else {
-      //     ctx.setLineDash([]);
-      //     ctx.strokeStyle = "white";
-      //     this.#drawRoad(x);
-      //     ctx.setLineDash([10, 15]);
-      //     ctx.strokeStyle = "red";
-      //     this.#drawRoad(x);
-      //   }
     }
     ctx.setLineDash([]);
-    ctx.strokeStyle = "white";
     this.borders.forEach((borders) => {
+      ctx.strokeStyle = "white";
       ctx.beginPath();
       ctx.moveTo(borders[0].x, borders[0].y);
       ctx.lineTo(borders[1].x, borders[1].y);
       ctx.stroke();
+      ctx.setLineDash([10, 15]);
+      ctx.strokeStyle = "red";
+      ctx.beginPath();
+      ctx.moveTo(borders[0].x, borders[0].y);
+      ctx.lineTo(borders[1].x, borders[1].y);
+      ctx.stroke();
+      ctx.setLineDash([]);
     });
   }
 }
