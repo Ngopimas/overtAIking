@@ -8,24 +8,42 @@
     <title>🏎️ F1 Overt[AI]king 👑</title>
   </head>
   <body class="texture">
-    <span id="team-select">
-      <label for="team">Choose a racing team: </label>
-      <select name="team" id="team">
-        <option value="white">~ Choose a team ~</option>
-        <option value="red" selected>Ferrari</option>
-        <option value="blue">Williams</option>
-        <option value="darkorange">McLaren</option>
-        <option value="darkgreen">Lotus</option>
-        <option value="darkblue">Red Bull</option>
-        <option value="grey">Mercedes</option>
-        <option value="darkslategray">Cooper</option>
-        <option value="green">Brabham</option>
-        <option value="gold">Renault</option>
-      </select>
+    <span class="container">
+      <span class="team-select">
+        <label for="team">Choose a racing team: </label>
+        <select name="team" id="team">
+          <option value="white">~ Choose a team ~</option>
+          <option value="red" selected>Ferrari</option>
+          <option value="blue">Williams</option>
+          <option value="darkorange">McLaren</option>
+          <option value="darkgreen">Lotus</option>
+          <option value="darkblue">Red Bull</option>
+          <option value="grey">Mercedes</option>
+          <option value="darkslategray">Cooper</option>
+          <option value="green">Brabham</option>
+          <option value="gold">Renault</option>
+        </select>
+      </span>
+
+      <span class="controllable-slider">
+        <label for="controllable">Controllable</label>
+
+        <label class="switch">
+          <input type="checkbox" id="controllable" />
+          <span class="slider round"></span>
+        </label>
+      </span>
+
+      <span class="vertical-buttons">
+        <button onclick="location.reload()" title="Restart">↻ Restart</button>
+        <button onclick="save()" title="Save path">💾 Save</button>
+        <button onclick="discard()" title="Remove saved path">🗑️ Delete</button>
+      </span>
+
+      <canvas id="track"></canvas>
+      <canvas id="network"></canvas>
     </span>
 
-    <canvas id="track"></canvas>
-    <canvas id="network"></canvas>
     <script src="utils.js"></script>
     <script src="visualizer.js"></script>
     <script src="network.js"></script>

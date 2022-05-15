@@ -149,31 +149,15 @@ class Car {
     this.y -= this.speed * Math.cos(this.angle);
   }
 
-  draw(ctx) {
-    if (this.sensor) {
+  draw(ctx, drawSensor = false) {
+    if (this.sensor && drawSensor) {
       this.sensor.draw(ctx);
     }
-
-    // if (this.polygon) {
-    //   if (this.isCrashed) {
-    //     ctx.fillStyle = "red";
-    //   } else {
-    //     ctx.fillStyle = this.color;
-    //   }
-    //   ctx.beginPath();
-    //   ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
-    //   for (let i = 1; i < this.polygon.length; i++) {
-    //     ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
-    //   }
-    //   ctx.fill();
-    // }
 
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(-this.angle);
-    // ctx.beginPath();
-    // ctx.rect(-this.width * 0.5, -this.height * 0.5, this.width, this.height);
-    // ctx.fill();
+
     if (!this.isCrashed) {
       ctx.drawImage(
         this.mask,
