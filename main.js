@@ -1,8 +1,12 @@
-const canvas = document.getElementById("track");
-canvas.width = 200;
+const track = document.getElementById("track");
+track.width = 200;
+const ctx = track.getContext("2d");
 
-const ctx = canvas.getContext("2d");
-const road = new Road(canvas.width * 0.5, canvas.width * 0.9);
+const network = document.getElementById("network");
+network.width = 400;
+const networkCtx = network.getContext("2d");
+
+const road = new Road(track.width * 0.5, track.width * 0.9);
 const car = new Car({
   x: road.getLaneCenter(1),
   y: 100,
@@ -32,15 +36,22 @@ function animate() {
     traffic[i].update(road.borders, []);
   }
   car.update(road.borders, traffic);
-  canvas.height = window.innerHeight;
+  const networkWidth = window.innerWidth - track.width - window.innerWidth;
+
+  const networkMaxWidth = Math.max(networkWidth, 400);
+  network.width = track.height = window.innerHeight;
+  network.height = window.innerHeight;
   ctx.save();
-  ctx.translate(0, -car.y + canvas.height * 0.7);
+  ctx.translate(0, -car.y + track.height * 0.7);
   road.draw(ctx);
   for (let i = 0; i < traffic.length; i++) {
     traffic[i].draw(ctx);
   }
   car.draw(ctx);
   ctx.restore();
+
+  Visualizer.drawNetwork(networkCtx, car.brain);
+
   requestAnimationFrame(animate);
 }
 

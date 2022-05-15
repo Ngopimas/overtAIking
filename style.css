@@ -9,6 +9,10 @@ body {
   background-color: slategray;
 }
 
+#network {
+  background-color: black;
+}
+
 #team-select {
   position: fixed;
   left: 4px;
