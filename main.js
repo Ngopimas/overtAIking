@@ -1,4 +1,4 @@
-const canvas = document.getElementById("canvas");
+const canvas = document.getElementById("track");
 canvas.width = 200;
 
 const ctx = canvas.getContext("2d");
@@ -6,7 +6,8 @@ const road = new Road(canvas.width * 0.5, canvas.width * 0.9);
 const car = new Car({
   x: road.getLaneCenter(1),
   y: 100,
-  controllable: true,
+  // controllable: true,
+  ai: true,
   maxSpeed: 5,
   // color: "red", // Ferrari
   // color: "blue", // Williams

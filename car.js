@@ -7,6 +7,7 @@ class Car {
     controllable = false,
     maxSpeed = 2,
     color = "white",
+    ai = false,
   }) {
     this.x = x;
     this.y = y;
@@ -21,8 +22,11 @@ class Car {
     this.angle = 0;
     this.isCrashed = false;
     this.controls = new Controls(controllable);
-    if (controllable) {
+    this.useBrain = ai && !controllable;
+
+    if (controllable || ai) {
       this.sensor = new Sensor(this);
+      this.brain = new NeuralNetwork([this.sensor.rayCount, 6, 4]);
     }
 
     this.img = new Image();
@@ -38,7 +42,7 @@ class Car {
     };
   }
 
-  updateColor(color) {
+  updateColor() {
     this.maskCtx.clearRect(0, 0, this.width, this.height);
     this.maskCtx.fillStyle = this.color;
     this.maskCtx.rect(0, 0, this.width, this.height);
@@ -56,6 +60,17 @@ class Car {
 
     if (this.sensor) {
       this.sensor.update(roadBorders, traffic);
+      const offsets = this.sensor.readings.map((sensor) => {
+        return !sensor ? 0 : 1 - sensor.offset;
+      });
+      const outputs = NeuralNetwork.feedForward(offsets, this.brain);
+
+      if (this.useBrain) {
+        this.controls.forward = outputs[0];
+        this.controls.backward = outputs[3];
+        this.controls.left = outputs[1];
+        this.controls.right = outputs[2];
+      }
     }
   }
 
