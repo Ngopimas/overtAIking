@@ -2,6 +2,8 @@ let won = false;
 
 const team = document.getElementById("team");
 
+const position = document.getElementById("position");
+
 team.value = JSON.parse(localStorage.getItem("teamColor")) || "red";
 
 const track = document.getElementById("track");
@@ -14,7 +16,7 @@ const networkCtx = network.getContext("2d");
 
 const road = new Road(track.width * 0.5, track.width * 0.9);
 
-const N = 500;
+const N = 250;
 
 const cars = generateCars(N);
 let bestCar = cars[0];
@@ -30,18 +32,29 @@ if (localStorage.getItem("bestCar")) {
 const traffic = [
   new Car({ x: road.getLaneCenter(1), y: -100, color: getRandomColor() }),
   new Car({ x: road.getLaneCenter(0), y: -300, color: getRandomColor() }),
-  new Car({ x: road.getLaneCenter(2), y: -300, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(2), y: -320, color: getRandomColor() }),
   new Car({ x: road.getLaneCenter(0), y: -500, color: getRandomColor() }),
-  new Car({ x: road.getLaneCenter(1), y: -500, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(1), y: -510, color: getRandomColor() }),
   new Car({ x: road.getLaneCenter(1), y: -700, color: getRandomColor() }),
-  new Car({ x: road.getLaneCenter(2), y: -700, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(2), y: -720, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(0), y: -850, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(2), y: -1050, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(1), y: -1060, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(0), y: -1200, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(2), y: -1210, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(2), y: -1300, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(1), y: -1420, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(2), y: -1400, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(0), y: -1550, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(1), y: -1650, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(0), y: -1750, color: getRandomColor() }),
+  new Car({ x: road.getLaneCenter(2), y: -1800, color: getRandomColor() }),
 ];
 
 updateCarsColor(team.value);
 animate();
 
 function updateCarsColor(color) {
-  console.log(color);
   for (let i = 0; i < cars.length; i++) {
     cars[i].color = color;
     cars[i].updateColor();
@@ -81,6 +94,10 @@ function animate(time) {
     cars[i].update(road.borders, traffic);
   }
   bestCar = cars.find((c) => c.y == Math.min(...cars.map((c) => c.y)));
+
+  const currentPosition = traffic.filter((c) => bestCar.y - c.y - 1 < 0).length;
+  position.innerText = `P${1 + traffic.length - currentPosition}`;
+
   lastCarDistance = traffic[traffic.length - 1].y;
   if (!won && bestCar.y - lastCarDistance + 2 < 0) {
     alert("💬 GOOD JOB. YOU'RE P1. DON'T CRASH NOW. 🍾");
