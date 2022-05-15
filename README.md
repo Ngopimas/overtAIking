@@ -1,4 +1,4 @@
-# overtAIking
+# overt[AI]king
 https://ngopimas.github.io/overtAIking/
 
 Self driving car in JS with no libraries.
