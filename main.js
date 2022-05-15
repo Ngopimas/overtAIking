@@ -83,7 +83,7 @@ function animate(time) {
   bestCar = cars.find((c) => c.y == Math.min(...cars.map((c) => c.y)));
   lastCarDistance = traffic[traffic.length - 1].y;
   if (!won && bestCar.y - lastCarDistance + 2 < 0) {
-    alert("YOU WIN");
+    alert("💬 GOOD JOB. YOU'RE P1. DON'T CRASH NOW. 🍾");
     won = true;
   }
 
