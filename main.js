@@ -1,3 +1,5 @@
+let won = false;
+
 const team = document.getElementById("team");
 
 team.value = JSON.parse(localStorage.getItem("teamColor")) || "red";
@@ -79,6 +81,11 @@ function animate(time) {
     cars[i].update(road.borders, traffic);
   }
   bestCar = cars.find((c) => c.y == Math.min(...cars.map((c) => c.y)));
+  lastCarDistance = traffic[traffic.length - 1].y;
+  if (!won && bestCar.y - lastCarDistance + 2 < 0) {
+    alert("YOU WIN");
+    won = true;
+  }
 
   const networkWidth =
     window.innerWidth - track.width - window.innerWidth * 0.2;
