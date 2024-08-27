@@ -34,15 +34,15 @@ Follow these steps to add a key-value pair to your browser local storage.
     ```
 
 4. **Viewing Local Storage in DevTools:**
-   - Go to the “Application” tab in developer tools.
-   - Under “Storage,” click on “Local Storage.”
+   - Go to the `Application` tab in developer tools.
+   - Under `Storage`, click on `Local Storage`.
    - Select the proper page from the dropdown, and you should see the key and value you just added.
 
-5. **Removing the Key-Value Pair:**
-   - If you want to remove the key-value pair from the local storage, run the following code in the console:
+5. **Removing the Model:**
+   - If you want to remove the pre-trained model directly from the local storage, run the following code in the console:
     
     ```javascript
-    localStorage.removeItem(key);
+    localStorage.removeItem('bestCar');
     ```
    - You might prefer to use the `🗑️ Delete` button in the web page instead.
 
